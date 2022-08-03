@@ -5,6 +5,8 @@ import com.allstate.payments.domain.CreditCardTransaction;
 import com.allstate.payments.dto.CreditCardTransactionDTO;
 import com.allstate.payments.exception.InvalidTransactionException;
 import com.allstate.payments.exception.TransactionNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +15,14 @@ import java.util.*;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
+    Logger logger = LoggerFactory.getLogger(PaymentService.class);
     @Autowired
     private PaymentRepository paymentRepository;
 
     @Override
     public List<CreditCardTransaction> getAllTransactions() {
         List<CreditCardTransaction> payments = this.paymentRepository.findAll();
-        System.out.println("returned " + payments);
+        logger.debug("returned " + payments);
         //        new ArrayList<>();
         //payments.add(new CreditCardTransaction(1, 100.0, "USA", "USD", LocalDate.now(), "0001", 1, 0.01, "Visa"));
        // payments.add(new CreditCardTransaction(1, 200.0, "FRA", "EUR", LocalDate.of(2022,5,1), "0002", 2, 0.02, "MasterCard"));
@@ -69,17 +72,17 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public CreditCardTransaction updateTransaction(Integer id, CreditCardTransaction transaction) {
-        System.out.println("updating " + transaction);
+        logger.info("updating " + transaction);
         CreditCardTransaction tranx = null;
         try {
             tranx = this.paymentRepository.findById(id).get();
-            System.out.println("found " + tranx);
+            logger.info("found " + tranx);
             transaction.setId(tranx.getId());
             if (transaction.getOrderId() == null) transaction.setOrderId(tranx.getOrderId());
             if (transaction.getTaxCode() == null) transaction.setTaxCode(tranx.getTaxCode());
             //tranx = transaction;
             CreditCardTransaction saved = this.paymentRepository.save(transaction);
-            System.out.println("saved " + saved);
+            logger.info("saved " + saved);
             return saved;
         } catch (Exception e) {
             throw new InvalidTransactionException(e.getMessage());
@@ -89,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public CreditCardTransaction createTransaction(CreditCardTransactionDTO transaction) {
         CreditCardTransaction tranx = transaction.toCreditCardTransaction();
-        System.out.println("creating " + tranx);
+        logger.info("creating " + tranx);
         tranx.setDate(LocalDate.now());
         if (tranx.getOrderId() == null) tranx.setOrderId("12345");
         if ("UK".equals(tranx.getCountry())) {
@@ -102,7 +105,7 @@ public class PaymentServiceImpl implements PaymentService {
             tranx.setTaxRate(0.15);
             tranx.setTaxCode(30);
         }
-        System.out.println("saving " + tranx);
+        logger.info("saving " + tranx);
         return this.paymentRepository.save(tranx);
     }
 }
