@@ -1,6 +1,7 @@
 package com.allstate.payments.control;
 
 import com.allstate.payments.domain.CreditCardTransaction;
+import com.allstate.payments.dto.CreditCardTransactionDTO;
 import com.allstate.payments.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -63,5 +64,11 @@ public class PaymentController {
         CreditCardTransaction saved = this.paymentService.updateTransaction(id, transaction);
         System.out.println("saved " + saved);
         return saved;
+    }
+
+    @PostMapping("/create")
+    public CreditCardTransaction createPayment(@RequestBody CreditCardTransactionDTO creditCardTransactionDTO) {
+        System.out.println("received " + creditCardTransactionDTO);
+        return this.paymentService.createTransaction(creditCardTransactionDTO);
     }
 }

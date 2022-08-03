@@ -2,6 +2,7 @@ package com.allstate.payments.service;
 
 import com.allstate.payments.data.PaymentRepository;
 import com.allstate.payments.domain.CreditCardTransaction;
+import com.allstate.payments.dto.CreditCardTransactionDTO;
 import com.allstate.payments.exception.InvalidTransactionException;
 import com.allstate.payments.exception.TransactionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,25 @@ public class PaymentServiceImpl implements PaymentService {
         } catch (Exception e) {
             throw new InvalidTransactionException(e.getMessage());
         }
+    }
+
+    @Override
+    public CreditCardTransaction createTransaction(CreditCardTransactionDTO transaction) {
+        CreditCardTransaction tranx = transaction.toCreditCardTransaction();
+        System.out.println("creating " + tranx);
+        tranx.setDate(LocalDate.now());
+        if (tranx.getOrderId() == null) tranx.setOrderId("12345");
+        if ("UK".equals(tranx.getCountry())) {
+            tranx.setTaxRate(0.2);
+            tranx.setTaxCode(1);
+        } else if ("USA".equals(tranx.getCountry())) {
+            tranx.setTaxRate(0.0);
+            tranx.setTaxCode(0);
+        } else {
+            tranx.setTaxRate(0.15);
+            tranx.setTaxCode(30);
+        }
+        System.out.println("saving " + tranx);
+        return this.paymentRepository.save(tranx);
     }
 }

@@ -1,10 +1,8 @@
 package com.allstate.payments.service;
 
 import com.allstate.payments.domain.CreditCardTransaction;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.allstate.payments.dto.CreditCardTransactionDTO;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +15,5 @@ public interface PaymentService {
     public CreditCardTransaction getTransactionById(Integer id);
     public CreditCardTransaction addTransaction(CreditCardTransaction transaction);
     public CreditCardTransaction updateTransaction(Integer id, CreditCardTransaction transaction);
+    public CreditCardTransaction createTransaction(CreditCardTransactionDTO transaction);
 }
