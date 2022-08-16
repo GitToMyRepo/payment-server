@@ -3,6 +3,7 @@ package com.allstate.payments.domain;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
@@ -123,5 +124,18 @@ public class CreditCardTransaction {
                 ", taxRate=" + taxRate +
                 ", type='" + type + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CreditCardTransaction that = (CreditCardTransaction) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

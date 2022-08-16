@@ -14,9 +14,9 @@ public class CreditCardTransactionDTO {
         return country;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
+//    public LocalDate getDate() {
+//        return date;
+//    }
 
     public Integer getTaxCode() {
         return taxCode;
