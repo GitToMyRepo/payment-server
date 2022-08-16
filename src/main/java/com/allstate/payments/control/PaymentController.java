@@ -25,6 +25,7 @@ public class PaymentController {
     @GetMapping("")
     public List<CreditCardTransaction> getAll(@RequestParam(name="orderid", required = false) Integer id,
                                               @RequestParam(name="country", required = false) String country) {
+        System.out.println("hitting getAll");
         if (id != null) {
             return this.paymentService.getTransaction(id);
         } else if (country != null) {

@@ -32,27 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //AUTHORISATION
-
-    //@Override
-    protected void configure1(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll();
-
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/payment/**")
-                .hasAnyRole("USER", "MANAGER")
-                //.permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login")
-                .hasAnyRole("USER", "MANAGER")
-                .antMatchers(HttpMethod.POST).hasRole("MANAGER")
-                .antMatchers(HttpMethod.PUT).hasRole("MANAGER")
-                .and().csrf().disable()
-                .httpBasic();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.cors().and().authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS)
                 .permitAll();
 
@@ -68,4 +51,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .httpBasic();
     }
+
 }

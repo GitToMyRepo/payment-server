@@ -8,15 +8,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword( bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 }

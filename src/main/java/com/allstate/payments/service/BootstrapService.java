@@ -3,8 +3,6 @@ package com.allstate.payments.service;
 import com.allstate.payments.data.UserRepository;
 import com.allstate.payments.domain.User;
 import com.allstate.payments.domain.UserRole;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +10,12 @@ import javax.annotation.PostConstruct;
 
 @Service
 public class BootstrapService {
-    Logger logger = LoggerFactory.getLogger(PaymentService.class);
+
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     UserManagementService userManagementService;
-
-//    @PostConstruct
-//    public void createUsers() {
-//        if (userRepository.findAll().size() != 0) return;
-//        User user = new User("user1", "thisisabadpasword", "Matt", UserRole.USER);
-//        User admin = new User("user2", "thisisabadpasword", "Admin", UserRole.MANAGER);
-//        this.userManagementService.save(user);
-//        this.userManagementService.save(admin);
-//        logger.info("saved");
-//    }
 
     @PostConstruct
     public void createInitialUsers () {
@@ -39,3 +27,4 @@ public class BootstrapService {
         }
     }
 }
+
