@@ -1,4 +1,5 @@
-
+Log in as user1/thisisabadpasword is read only, e.g. get all payments
+Log in as user2/thisisabadpasword is read and write, e.g. add payments
 
 Swagger works in the project. Its URL is: http://localhost:8080/swagger-ui/
 
