@@ -1,0 +1,5 @@
+
+
+Swagger works in the project. Its URL is: http://localhost:8080/swagger-ui/
+
+
